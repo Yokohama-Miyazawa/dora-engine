@@ -18,4 +18,7 @@ module.exports = {
   free_editor: true,
   home: process.env.HOME,
   use_db: (process.env.ROBOT_DB==='true'),
+  slack: {
+    api_token: process.env.SLACK_API_TOKEN || '',
+  },
 }

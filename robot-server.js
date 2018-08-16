@@ -1227,6 +1227,16 @@ app.post('/camera', (req, res) => {
   res.send({ status: 'OK' });
 });
 
+/*
+  slackbotのAPIトークンを返す
+  raspi-ip-announcer用
+*/
+app.post('/slack-api-token', (req, res) => {
+  var slackApiToken = config.slack.api_token;
+  // console.log(slackApiToken);
+  res.send(slackApiToken);
+});
+
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
