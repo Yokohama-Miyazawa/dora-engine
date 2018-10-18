@@ -401,13 +401,24 @@ function chat(message, tone, callback) {
     json.clientData.option.t = tone;
   }
 
+  if (config.chatMode === "docomo") {
+    var apiUrl = 'https://api.apigw.smt.docomo.ne.jp/naturalChatting/v1/dialogue?APIKEY='+APIKEY;
+  } else if(config.chatMode === "nadeshiko") {
+    var apiUrl = 'http://127.0.0.1:5000/chat';
+  }
+
   request({
     method: 'POST',
-    url:'https://api.apigw.smt.docomo.ne.jp/naturalChatting/v1/dialogue?APIKEY='+APIKEY,
+    url:apiUrl,
     json,
   }).then((body) => {
     callback(null, body);
-    robotData.chatRecvTime = body.serverSendTime;
+    if (config.chatMode === "docomo") {
+      robotData.chatRecvTime = body.serverSendTime;
+    } else if (config.chatMode === "nadeshiko") {
+      var dt = new Date();
+      robotData.chatRecvTime = dt.toFormat("YYYY-MM-DD HH24:MI:SS");
+    }
     writeRobotData();
   }).catch((err) => {
     callback(err, null);

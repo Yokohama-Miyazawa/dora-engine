@@ -13,6 +13,7 @@ const config = {
     host: 'localhost',
     port: port,
   },
+  chatMode: 'nadeshiko',
   docomo: {
     api_key: process.env.DOCOMO_API_KEY || '',
     app_id:  process.env.DOCOMO_APP_ID  || '',
