@@ -269,7 +269,8 @@ function ReqTextToSpeech(req, res, mode='play') {
         const cmd = (process.platform === 'darwin') ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
         const p = path.join(__dirname, cmd)
         const opt = [
-          'mei_normal',
+          config.openJtalk.dictionary,
+          config.openJtalk.voice,
           request.input.text,
           sndfilepath,
         ]

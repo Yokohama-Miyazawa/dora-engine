@@ -108,6 +108,11 @@ const config = {
     weather: (process.env.ROBOT_DORA_CHAT_WEATHER || 'false') === 'true',
     wikipedia: (process.env.ROBOT_DORA_CHAT_WIKIPEDIA || 'true') === 'true',
   },
+  // Open JTalk関連
+  openJtalk: {
+    dictionary: process.env.OPENJTALK_DICTIONARY || null,
+    voice: process.env.OPENJTALK_VOICE || null,
+  },
 }
 
 module.exports = config;
