@@ -550,6 +550,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({ type: 'application/json' }))
 app.use(bodyParser.raw({ type: 'application/*' }))
+app.use(bodyParser.text())
 
 app.use(cookieParser())
 
@@ -1663,7 +1664,7 @@ const postCommand = async (req, res, credential) => {
       talk.stop();
       //servoAction('idle');
       execSoundCommand({ sound: 'stop' }, () => {
-        buttonClient.emit('stop-speech-to-text');
+        buttonClient.emit('stop-speech-to-text', {});
         buttonClient.emit('all-blink', {});
         // buttonClient.emit('close-all', {});
         speech.emit('data', 'stoped');
@@ -1750,7 +1751,7 @@ console.log(robotData.voice);
                   io.emit('scenario_status', {
                     message: msg,
                   });
-                  buttonClient.emit('stop-speech-to-text');
+                  buttonClient.emit('stop-speech-to-text', {});
                   buttonClient.emit('all-blink', {});
                   // buttonClient.emit('close-all', {});
                   speech.emit('data', 'stoped');
@@ -2439,6 +2440,10 @@ io.on('connection', function (socket) {
     console.log(Object.keys(quiz_masters));
   });
   socket.on('start-slave', function (payload) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2447,6 +2452,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('docomo-chat', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2471,6 +2480,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('dora-chat', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2494,6 +2507,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('text-to-speech', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2512,6 +2529,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('stop-text-to-speech', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2523,19 +2544,23 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('stop-speech',  function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
         if (payload.option === 'stop-sound') {
           execSoundCommand({ sound: 'stop' }, () => {
-            buttonClient.emit('stop-speech-to-text');
+            buttonClient.emit('stop-speech-to-text', {});
             speech.emit('data', 'stoped');
             talk.stop(() => {
               if (callback) callback('OK');
             });
           });
         } else {
-          buttonClient.emit('stop-speech-to-text');
+          buttonClient.emit('stop-speech-to-text', {});
           speech.emit('data', 'stoped');
           talk.stop(() => {
             if (callback) callback('OK');
@@ -2547,6 +2572,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('speech-to-text', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2570,6 +2599,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('stop-speech-to-text', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2581,6 +2614,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('command', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'command.write', (verified) => {
       try {
@@ -2609,6 +2646,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('message', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2618,6 +2659,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('quiz-command', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', async (verified) => {
       if (verified) {
@@ -2629,6 +2674,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('led-command', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2638,6 +2687,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('sound-command', (payload, callback) => {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2647,6 +2700,10 @@ io.on('connection', function (socket) {
     })
   })
   socket.on('button-command', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if (verified) {
@@ -2656,6 +2713,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('quiz', function(payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, '', async (verified) => {
       if (verified) {
@@ -2738,6 +2799,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('quiz-button', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'quiz-button.write', (verified) => {
       if (verified) {
@@ -2756,6 +2821,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('stop-quiz-button', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'quiz-button.write', (verified) => {
       if (verified) {
@@ -2765,6 +2834,10 @@ io.on('connection', function (socket) {
     })
   });
   socket.on('dora-event', function (payload, callback) {
+    if (typeof payload === 'undefined') {
+      if (callback) callback('NG');
+      return;
+    }
     localhostCheck(payload);
     checkPermission(payload, 'control.write', (verified) => {
       if ('action' in payload) {
