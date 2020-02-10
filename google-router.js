@@ -265,7 +265,8 @@ function ReqTextToSpeech(req, res, mode='play') {
 
   const requestSynthesizeSpeech = (request, sndfilepath, callback) => {
     limitCacheFile(cacheDB, config.synthesizeSpeech.maxCacheSize, () => {
-      if (request.voice.languageCode === 'open-jTalk') {
+      console.log(config.voiceSynthesis);
+      if (config.voiceSynthesis === 'open-jTalk' || request.voice.languageCode === 'open-jTalk') {
         const cmd = (process.platform === 'darwin') ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
         const p = path.join(__dirname, cmd)
         const opt = [

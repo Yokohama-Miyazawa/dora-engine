@@ -73,8 +73,15 @@ function Talk() {
           } else if (this.macvoice) {
             if (languageCode === 'open-jTalk') {
               startCallback();
-              this._playone = spawn(path.join(__dirname, 'talk-open-jTalk-mac.sh'), [voice === 'reimu' ? 'mei_normal' : voice , `${text}`]);
+              const opt = [
+                config.openJtalk.dictionary,
+                config.openJtalk.voice,
+                request.input.text,
+                sndfilepath,
+              ]
+              this._playone = spawn(path.join(__dirname, 'talk-open-jTalk-mac.sh'), opt);
               this._playone.on('close', function (code) {
+                // ファイル再生
                 playone();
               });
             } else {
