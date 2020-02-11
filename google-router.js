@@ -265,8 +265,8 @@ function ReqTextToSpeech(req, res, mode='play') {
 
   const requestSynthesizeSpeech = (request, sndfilepath, callback) => {
     limitCacheFile(cacheDB, config.synthesizeSpeech.maxCacheSize, () => {
-      console.log(config.voiceSynthesis);
-      if (config.voiceSynthesis === 'open-jTalk' || request.voice.languageCode === 'open-jTalk') {
+      if (request.voice.languageCode === 'open-jTalk') {
+        /*
         const cmd = (process.platform === 'darwin') ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
         const p = path.join(__dirname, cmd)
         const opt = [
@@ -275,6 +275,28 @@ function ReqTextToSpeech(req, res, mode='play') {
           request.input.text,
           sndfilepath,
         ]
+        const recording = spawn(p, opt);
+        recording.on('close', function(code) {
+          callback(null, sndfilepath);
+        });
+        */
+        const cmd = (process.platform === 'darwin') ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
+        const p = path.join(__dirname, cmd)
+        let opt;
+        if(process.platform === 'darwin') {
+          opt = [
+            config.openJtalk.dictionary,
+            config.openJtalk.voice,
+            request.input.text,
+            sndfilepath
+          ]
+        } else {
+          opt = [
+            'mei_normal',
+            request.input.text,
+            sndfilepath
+          ]
+        }
         const recording = spawn(p, opt);
         recording.on('close', function(code) {
           callback(null, sndfilepath);

@@ -73,8 +73,6 @@ const config = {
     //開始したいスクリプト
     filename: process.env.ROBOT_START_SCRIPT || 'start.dora',
   },
-  // 音声合成システム選択
-  voiceSynthesis: process.env.VOICE_SYNTHESIS_SYSTEM || null,
   //Google text-to-speech関連
   synthesizeSpeech: {
     //Google認証ファイルへのパス
