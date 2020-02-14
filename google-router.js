@@ -3,6 +3,7 @@ const router = express.Router();
 const config = require('./config');
 const { spawn } = require('child_process');
 const fs = require('fs');
+const isWsl = require('is-wsl');
 const googleSpeech = (() => {
   if ('synthesizeSpeech' in config
    && 'credentialPath' in config.synthesizeSpeech
@@ -218,7 +219,7 @@ function ReqTextToSpeech(req, res, mode='play') {
   const playone = (sndfilepath, callback) => {
     if (mode === 'silence') return callback(null, 0);
     const cmd = (process.platform === 'darwin') ? 'afplay' : 'aplay';
-    const opt = (process.platform === 'darwin') ? [sndfilepath] : ['-Dplug:softvol', sndfilepath];
+    const opt = (process.platform === 'darwin' || isWsl) ? [sndfilepath] : ['-Dplug:softvol', sndfilepath];
     console.log(`/usr/bin/${cmd} ${sndfilepath}`);
     text_to_speech.playone = spawn(`/usr/bin/${cmd}`, opt);
     text_to_speech.playone.on('close', function(code) {
