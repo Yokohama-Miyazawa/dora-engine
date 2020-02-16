@@ -281,10 +281,10 @@ function ReqTextToSpeech(req, res, mode='play') {
           callback(null, sndfilepath);
         });
         */
-        const cmd = (process.platform === 'darwin') ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
+        const cmd = (process.platform === 'darwin' || isWsl) ? 'talk-open-jTalk-mac.sh' : 'talk-open-jTalk-raspi.sh';
         const p = path.join(__dirname, cmd)
         let opt;
-        if(process.platform === 'darwin') {
+        if(process.platform === 'darwin' || isWsl) {
           opt = [
             config.openJtalk.dictionary,
             config.openJtalk.voice,
