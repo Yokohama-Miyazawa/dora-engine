@@ -10,11 +10,12 @@ cd ~
 
 sudo apt-get update
 sudo apt-get upgrade -y
+sudo apt-get install -y apt-transport-https ca-certificates gnupg curl
 
 export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
 echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-sudo apt-get update && sudo apt-get install google-cloud-sdk -y
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg --yes
+sudo apt-get update && sudo apt-get install google-cloud-cli -y
 
 #sudo apt-get install sqlite3 -y
 
