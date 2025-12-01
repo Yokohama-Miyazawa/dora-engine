@@ -154,7 +154,7 @@ $ ./setup-autolaunch.sh
 
 再起動します。
 
-### /boot/config.txt を編集する
+### /boot/firmware/config.txt を編集する
 
 I2S 接続の音声デバイスをりようする場合は以下の手順を進めます。dora-engine は I2S 接続の「MAX98357A」と「SPH0645LM4H」を利用することを前提として実装しています。
 
