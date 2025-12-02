@@ -18,8 +18,8 @@ import {
   checkPermission,
 } from "./access-check"
 
-import * as express from "express"
-import * as cookieParser from "cookie-parser"
+import express from "express"
+const cookieParser = require("cookie-parser")
 import axios, { Method } from "axios"
 import { ChatController } from "./chat-controller"
 import { selectEngine } from "./speech"
@@ -28,15 +28,16 @@ import { ButtonClient } from "./button-client"
 import { ButtonModule } from "./button-module"
 import { RobotDB, RobotData } from "./robot-db"
 import { router as googleRouter } from "./google-router"
-import * as session from "express-session"
+const session = require("express-session")
 const MemoryStore = require("memorystore")(session)
-import * as passport from "passport"
+const passport = require("passport")
 // const DoraChat = require("./doraChat")
 const LocalStrategy = require("passport-local").Strategy
 import { mkdirp } from "mkdirp"
 import UserDefaults from "./user-defaults"
 import { upload, readDir, deleteFile } from "./file-server"
-import * as csrf from "csurf"
+//import { csrf } from "csurf"
+const csrf = require("csurf")
 
 // const router = express.Router()
 const speech = selectEngine(process.env["SPEECH"])
@@ -1474,8 +1475,8 @@ const postCommand = async (req, res, credential) => {
         "filename" in req.body && req.body.filename !== null
           ? req.body.filename
           : "filename" in req.params
-          ? req.params.filename
-          : null
+            ? req.params.filename
+            : null
       const base = path.join(HOME, "Documents")
       mkdirp(path.join(base, username, ".cache")).then(async (err) => {
         if (uri) {
