@@ -182,7 +182,7 @@ function ReqTextToSpeech(req, res, mode = "play") {
 
   if (action === "stop") {
     if (text_to_speech.playone) {
-      utils.kill(text_to_speech.playone.pid, "SIGTERM", function () {})
+      utils.kill(text_to_speech.playone.pid, "SIGTERM", function () { })
       text_to_speech.playone = null
     }
     return res.send("OK\n")
@@ -281,7 +281,7 @@ function ReqTextToSpeech(req, res, mode = "play") {
           sizesum += v.size
           if (sizesum > maxsizebyte) {
             if (v.filename) {
-              fs.unlink(cacheFilePath(v.filename), (err) => {})
+              fs.unlink(cacheFilePath(v.filename), (err) => { })
               delete cacheDB[v.filename]
               saveCacheDB()
             }
