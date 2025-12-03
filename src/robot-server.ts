@@ -743,6 +743,12 @@ app.get("/health", (req, res) => {
 app.get("/recordingTime", (req, res) => {
   res.send(`${speech.recordingTime}`)
 })
+/*
+app.post("/dora-chat", hasPermission("control.write"), (req, res) => {
+  Log.info(`/dora-chat in robot-server. req:${req}, res:${res}`)
+  Log.info(req.body)
+  res.send("OK")
+})*/
 
 // curl -X POST -d '{"message":"こんにちは"}' -H 'content-type:application/json' http://localhost:3090/text-to-speech
 app.post("/text-to-speech", hasPermission("control.write"), (req, res) => {

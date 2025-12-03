@@ -2,6 +2,7 @@ import { Node } from ".."
 import { Log } from "~/logger"
 const utils = require("../libs/utils")
 import { QuizOK, QuizOKImage, QuizNG, QuizNGImage, QuizCategory, QuizSlide } from "./quiz"
+import { generateContent } from "../../dora-chat-gemini"
 
 function Add(node, msg, options, isTemplated, sign) {
   let message = options
@@ -816,6 +817,27 @@ export const Core = function (DORA, config = {}) {
     })
   }
   DORA.registerType("change", CoreChange)
+
+  /*
+   * 生成AIにメッセージを投げ、返答を得る
+   * /dora-chat
+   */
+  function doraChat(node, options) {
+    Log.info(`dora-chat node:${node}, options:${options}`)
+    node.on("input", async function (msg) {
+      generateContent(msg.payload)
+        .then(res => {
+          Log.info(res)
+          msg.payload = res
+          node.send(msg)
+        })
+        .catch(err => {
+          msg.payload = "Geminiのエラーです"
+          node.send(msg)
+        });
+    })
+  }
+  DORA.registerType("dora-chat", doraChat)
 
   /*
    *
