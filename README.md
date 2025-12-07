@@ -20,7 +20,7 @@
 音声認識はマイクに入力した音声を文字列に変換する機能です。
 デフォルトでは Chrome の [Web Speech API Speech Recognition](https://developer.mozilla.org/ja/docs/Web/API/SpeechRecognition) を使います。
 
-Speech API を使用するには https 接続か localhost 接続が必要です。Raspberry Pi で dora-engine を動かす場合は、そのままでは音声認識できませんので、Chrome ブラウザを開く PC に dora-engine へのプロキシー(nginxなど)を立てて接続します。
+Speech API を使用するには https 接続か localhost 接続が必要です。Raspberry Pi で dora-engine を動かす場合は、そのままでは音声認識できませんので、Chrome ブラウザを開く PC に dora-engine へのプロキシー(nginx など)を立てて接続します。
 
 [プロキシーのサンプル / nginx-proxy](https://github.com/yamagame/nginx-proxy)
 
@@ -50,8 +50,8 @@ ReazonSpeech を使用すると、インターネット接続なしで音声認�
 音声合成には以下のものを選択できます。
 
 - [OpenJTalk](http://open-jtalk.sp.nitech.ac.jp/)
-- [AquesTalk Pi](https://www.a-quest.com/products/aquestalkpi.html) (linuxのみ/デフォルト)
-- say コマンド (macのみ/デフォルト)
+- [AquesTalk Pi](https://www.a-quest.com/products/aquestalkpi.html) (linux のみ/デフォルト)
+- say コマンド (mac のみ/デフォルト)
 - [Google Text-to-Speech](https://cloud.google.com/text-to-speech/)
 - [AWS Polly](https://aws.amazon.com/jp/polly/)
 
@@ -112,7 +112,7 @@ MG996R ではダンボールロボットのサイズに合いませんので上�
 
 ![Raspberry Pi Imager](./docs/images/raspi-os-imager.png)
 
-OSは「Raspberry Pi OS (64-bit)」や「Raspberry Pi OS Lite (64-bit)」を選択します。メモリ使用量が少なくて済むので「Raspberry Pi OS Lite (64-bit)」がおすすめです。
+OS は「Raspberry Pi OS (64-bit)」や「Raspberry Pi OS Lite (64-bit)」を選択します。メモリ使用量が少なくて済むので「Raspberry Pi OS Lite (64-bit)」がおすすめです。
 
 Raspberry Pi のターミナルで、以下のコマンドを入力して、ロボットエンジンをダウンロードします。
 
@@ -276,7 +276,7 @@ $ ./talk-f1.sh こんにちは
 
 [Google Speech API](https://cloud.google.com/speech-to-text?hl=ja) と　[whisper.cpp](https://github.com/ggerganov/whisper.cpp) が選択できます。
 
-### Chrome ブラウザの音声認識APIを使用する場合
+### Chrome ブラウザの音声認識 API を使用する場合
 
 ```sh
 # ロボットエンジンの起動
@@ -310,10 +310,11 @@ chrome ブラウザで http://localhost:3090/browser-speech を開きます。�
 
 GCP プロジェクトの Speech API を有効にします。
 
-環境変数 SPEECH に google を設定します。
+環境変数 SPEECH に google を、環境変数 GOOGLE_APPLICATION_CREDENTIALS に認証ファイルへのパスを設定します。
 
-```
+```sh
 export SPEECH=google
+export GOOGLE_APPLICATION_CREDENTIALS=/home/${USER}/.config/gcloud/application_default_credentials.json
 ```
 
 音声認識のテストを行います。以下のコマンドをシナリオエディタに入力してエコーロボットになれば OK です。音声認識している最中はお腹のボタンが点灯します。
@@ -398,7 +399,30 @@ $ bash ./models/download-ggml-model.sh ggml-large-v3
 export SPEECH=whisper
 ```
 
-## Webサーバ
+## 対話
+
+[Gemini API](https://ai.google.dev/gemini-api/)を使ってロボットと対話できます。
+
+### Gemini API による対話の場合
+
+Google Cloud project を作成または選択し、Vertex AI API を有効化します。
+詳細は以下を参照してください。
+
+https://googleapis.github.io/js-genai/release_docs/index.html
+
+三つの環境変数を設定します。
+
+- `GOOGLE_CLOUD_PROJECT`: Vertex AI API を有効化したプロジェクトの ID
+- `GOOGLE_CLOUD_LOCATION`: [Cloud のロケーション](https://cloud.google.com/about/locations?hl=ja#asia-pacific)。東京なら`asia-northeast1`
+- `GOOGLE_GENAI_USE_VERTEXAI`: Vertex AI を使用するか否か。`True`を選択
+
+```sh
+export GOOGLE_CLOUD_PROJECT=[Input the Project ID here]
+export GOOGLE_CLOUD_LOCATION=asia-northeast1
+export GOOGLE_GENAI_USE_VERTEXAI=True
+```
+
+## Web サーバ
 
 dora-engine は Web サーバになっており、プレゼンテーション画面やシナリオエディタをホストしています。
 
@@ -457,7 +481,7 @@ Chrome ブラウザで音声認識させる場合は以下の URL を開きま�
 ```
 
 スクリプトの詳細は [DoraScript Language Specification](./docs/DORA-SCRIPT.md)
- を参照してください。
+を参照してください。
 
 ### コメント
 
