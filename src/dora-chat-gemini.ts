@@ -3,8 +3,16 @@ const { GoogleGenAI } = require('@google/genai');
 const GOOGLE_CLOUD_PROJECT = process.env.GOOGLE_CLOUD_PROJECT;
 const GOOGLE_CLOUD_LOCATION = process.env.GOOGLE_CLOUD_LOCATION || 'global';
 
+// デフォルトのキャラクター設定
+const defaultSystemInstruction = [
+  'あなたは兵庫県姫路市出身で、大分県別府市在住の女性です。',
+  '相手の言葉に対して、友達と話すような感覚で返事をします。',
+  '相手のこと(二人称)は「君」と呼びます。',
+];
+
 export async function generateContent(
   inputText,
+  systemInstruction = defaultSystemInstruction,
   projectId = GOOGLE_CLOUD_PROJECT,
   location = GOOGLE_CLOUD_LOCATION
 ) {
@@ -25,10 +33,7 @@ export async function generateContent(
     model: 'gemini-2.5-flash',
     contents: prompt,
     config: {
-      systemInstruction: [
-        'あなたは姫路出身の女性です。',
-        '相手の言葉に対して、友達と話すような感覚で返事をします。',
-      ],
+      systemInstruction: systemInstruction,
     },
   });
 

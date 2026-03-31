@@ -822,10 +822,16 @@ export const Core = function (DORA, config = {}) {
    * 生成AIにメッセージを投げ、返答を得る
    * /dora-chat
    */
-  function doraChat(node, options) {
+  function DoraChat(node, options) {
     Log.info(`dora-chat node:${node}, options:${options}`)
     node.on("input", async function (msg) {
-      generateContent(msg.payload)
+      const params: {
+        systemInstruction?: string[]
+      } = {}
+      if (typeof msg.gemini !== "undefined" && typeof msg.gemini.systemInstruction !== "undefined") {
+        params.systemInstruction = [msg.gemini.systemInstruction]
+      }
+      generateContent(msg.payload, params.systemInstruction)
         .then(res => {
           Log.info(res)
           msg.payload = res
@@ -837,7 +843,7 @@ export const Core = function (DORA, config = {}) {
         });
     })
   }
-  DORA.registerType("dora-chat", doraChat)
+  DORA.registerType("dora-chat", DoraChat)
 
   /*
    *
@@ -982,7 +988,7 @@ export const Core = function (DORA, config = {}) {
               msg.topicPriority = 0
               node.next(msg)
             } else if (typeof res === "object") {
-              ;(msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
+              ; (msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
               msg.payload = res.transcript
               msg.speechText = msg.payload
               msg.topicPriority = 0
@@ -1123,7 +1129,7 @@ export const Core = function (DORA, config = {}) {
               msg.topicPriority = 0
               node.next(msg)
             } else if (typeof res === "object") {
-              ;(msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
+              ; (msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
               msg.payload = res.transcript
               msg.speechText = msg.payload
               msg.topicPriority = 0
@@ -1311,7 +1317,7 @@ export const Core = function (DORA, config = {}) {
   function CoreCall(node, options) {
     node.options = options
     node.on("input", async function (msg) {
-      const opt: { range? } = {}
+      const opt: { range?} = {}
       Object.keys(node.flow.options).forEach((key) => {
         opt[key] = node.flow.options[key]
       })
