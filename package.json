@@ -37,6 +37,7 @@
     "node-fetch": "3.3.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "pigpio": "^3.3.1",
     "ping": "^1.0.0",
     "pino": "^10.1.0",
     "ps-tree": "^1.2.0",
@@ -48,7 +49,6 @@
     "wav": "^1.0.2"
   },
   "optionalDependencies": {
-    "pigpio": "^3.3.1",
     "raspi": "^6.0.1",
     "raspi-gpio": "^6.2.2",
     "raspi-soft-pwm": "^6.0.2",

@@ -1,7 +1,8 @@
 const { GoogleGenAI } = require('@google/genai');
 
 const GOOGLE_CLOUD_PROJECT = process.env.GOOGLE_CLOUD_PROJECT;
-const GOOGLE_CLOUD_LOCATION = process.env.GOOGLE_CLOUD_LOCATION || 'global';
+//const GOOGLE_CLOUD_LOCATION = process.env.GOOGLE_CLOUD_LOCATION || 'global';
+const GOOGLE_CLOUD_LOCATION = 'global';
 
 // デフォルトのキャラクター設定
 const defaultSystemInstruction = [
@@ -30,7 +31,8 @@ export async function generateContent(
   const prompt = (inputText === 'undefined') ? defaultrompt : inputText;
 
   const response = await client.models.generateContent({
-    model: 'gemini-2.5-flash',
+    //model: 'gemini-2.5-flash',
+    model: 'gemini-3.1-flash-lite',
     contents: prompt,
     config: {
       systemInstruction: systemInstruction,
