@@ -39,12 +39,15 @@ export const HTTP = function (DORA, config = {}) {
           body = JSON.stringify(body)
           headers["Content-Type"] = "application/json"
         }
+        const timeoutMs = "httpTimeout" in msg ? msg.httpTimeout : 3000
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
         try {
           let response = await fetch(`${message}`, {
             method: "POST",
             headers,
             body,
-            timeout: "httpTimeout" in msg ? msg.httpTimeout : 3000,
+            signal: controller.signal,
           })
           if (response.ok) {
             const data = await response.text()
@@ -79,6 +82,11 @@ export const HTTP = function (DORA, config = {}) {
             node.goto(msg, msg._httpErrorInterrupt)
             return
           }
+          if ((err as any).name === "AbortError") {
+            console.error("Fetch request timed out")
+          }
+        } finally {
+          clearTimeout(timeoutId)
         }
         node.send(msg)
       })
@@ -99,10 +107,13 @@ export const HTTP = function (DORA, config = {}) {
         if (isTemplated) {
           message = utils.mustache.render(message, msg)
         }
+        const timeoutMs = "httpTimeout" in msg ? msg.httpTimeout : 3000
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
         try {
           let response = await fetch(`${message}`, {
             method: "GET",
-            timeout: "httpTimeout" in msg ? msg.httpTimeout : 3000,
+            signal: controller.signal,
           })
           if (response.ok) {
             const data = await response.text()
@@ -137,6 +148,11 @@ export const HTTP = function (DORA, config = {}) {
             node.goto(msg, msg._httpErrorInterrupt)
             return
           }
+          if ((err as any).name === "AbortError") {
+            console.error("Fetch request timed out")
+          }
+        } finally {
+          clearTimeout(timeoutId)
         }
         node.send(msg)
       })

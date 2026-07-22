@@ -4,7 +4,7 @@ Version 0.2.0
 
 ## Basic Concepts
 
-DoraScriptは、コミュケーションロボット用のスクリプトです。
+DoraScript は、コミュケーションロボット用のスクリプトです。
 
 下記は、スライドをめくりながら解説をするスクリプトの例です。
 
@@ -25,9 +25,9 @@ DoraScriptは、コミュケーションロボット用のスクリプトです�
 ```
 
 スクリプトの各行は、実行時にノードオブジェクト化されます。
-各ノードオブジェクトは、Node-REDの様にmsgオブジェクトを受け渡します。
+各ノードオブジェクトは、Node-RED の様に msg オブジェクトを受け渡します。
 
-msgオブジェクトに値を代入するには、コマンド行に続いてピリオドでアトリビュートを指定します。例えば、下記のように記述すると、msg.payloadに「こんにちは」という文字列を代入することができます。
+msg オブジェクトに値を代入するには、コマンド行に続いてピリオドでアトリビュートを指定します。例えば、下記のように記述すると、msg.payload に「こんにちは」という文字列を代入することができます。
 
 ```
 /.payload/こんにちは
@@ -41,11 +41,9 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
 実行時に {{payload}} の部分が入れ替わって「こんにちは、私はダンボール頭のおしゃべりロボットです」とロボットが話します。
 
-
-スクリプトのサンプルは下記URLに置いてます。
+スクリプトのサンプルは下記 URL に置いてます。
 
 [https://github.com/yamagame/dora-script-sample](https://github.com/yamagame/dora-script-sample)
-
 
 ### コマンド
 
@@ -65,7 +63,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
 ### コメント
 
-コメントはC言語ライクなコメントが使用できますが、C言語と違って行の途中からコメントにすることはできません。
+コメントは C 言語ライクなコメントが使用できますが、C 言語と違って行の途中からコメントにすることはできません。
 
 ```
 //コメント
@@ -89,11 +87,11 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /log/{{payload}}
 
-  mustache記法を使って、msgのメンバを出力することもできます。
+  mustache 記法を使って、msg のメンバを出力することもできます。
 
       /log
 
-  省略するとmsgオブジェクト全体を出力します。
+  省略すると msg オブジェクト全体を出力します。
 
 - error
 
@@ -125,7 +123,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /check/天気/5
 
-  payloadに指定した文字が含まれていれば分岐します。
+  payload に指定した文字が含まれていれば分岐します。
 
 - goto
 
@@ -149,7 +147,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /delay/3
 
-  指定した秒数だけ待ちます。以下のように、delayを省略することもできます。
+  指定した秒数だけ待ちます。以下のように、delay を省略することもできます。
 
       /3
 
@@ -173,23 +171,23 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /push
 
-  値を省略するとmsg.payloadの値をスタックへプッシュします。
+  値を省略すると msg.payload の値をスタックへプッシュします。
 
 - pop
 
       /pop
 
-  メッセージのスタックから値をポップします。値はpayloadに設定されます。
+  メッセージのスタックから値をポップします。値は payload に設定されます。
 
 - check
 
       /check/天気
 
-  payloadに指定したキーワードが含まれていればメッセージのプライオリティに1を加算します。
+  payload に指定したキーワードが含まれていればメッセージのプライオリティに 1 を加算します。
 
       /check/天気/晴れ/雨
 
-  複数のキーワードを「/」区切りで指定することもできます。一致するキーワードが1つ含まれている毎にプライオリティに1が加算されます。
+  複数のキーワードを「/」区切りで指定することもできます。一致するキーワードが 1 つ含まれている毎にプライオリティに 1 が加算されます。
 
 - join
 
@@ -231,7 +229,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
       /joinLoop/:ループ
       /other/:その他の話題
 
-  forkコマンドが複数回実行された場合に必要な数だけjoinコマンドを呼ぶためにループします。
+  fork コマンドが複数回実行された場合に必要な数だけ join コマンドを呼ぶためにループします。
 
 - joinAll
 
@@ -252,7 +250,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /priority
 
-  パラメータを省略した場合は10が足されます。
+  パラメータを省略した場合は 10 が足されます。
 
 - topic
 
@@ -270,7 +268,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /sound/クイズスタート.wav
 
-  Soundフォルダに入っているサウンドファイルをaplayを使って再生します。
+  Sound フォルダに入っているサウンドファイルを aplay を使って再生します。
 
 - set
 
@@ -284,7 +282,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /get/.title
 
-  メッセージのアトリビュートをmsg.payloadに代入します。
+  メッセージのアトリビュートを msg.payload に代入します。
 
 - change
 
@@ -298,15 +296,15 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /text-to-speech
 
-  payloadに入っている文字を発話します。発話した文字はpayloadに代入されます。次のようにして、指定した文字を発話することもできます。
+  payload に入っている文字を発話します。発話した文字は payload に代入されます。次のようにして、指定した文字を発話することもできます。
 
       /text-to-speech/こんにちは
 
-  行頭に/(スラッシュ)がない行はtext-to-speechコマンドとして実行されます。
+  行頭に/(スラッシュ)がない行は text-to-speech コマンドとして実行されます。
 
       こんにちは
 
-  - AquesTalk Pi向けパラメータ
+  - AquesTalk Pi 向けパラメータ
 
     - .speech.speed
 
@@ -324,7 +322,7 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
           /.speech.voice/marisa
 
-      発話の声を変更します。デフォルトはreimuで、marisaに変更することができます。
+      発話の声を変更します。デフォルトは reimu で、marisa に変更することができます。
 
 - silence / silence.end
 
@@ -332,25 +330,25 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
       こんにちは
       /silence.end
 
-  /silenceと/silence.endに囲まれた部分は発話せず、発話内容をpayloadにテキストとして記録します。
+  /silence と/silence.end に囲まれた部分は発話せず、発話内容を payload にテキストとして記録します。
 
 - speech-to-text
 
       /speech-to-text/:例外発生
 
-  音声認識を待ちます。音声認識に成功すると認識した音声が文字となってpayloadに代入され次へ処理が移ります。
+  音声認識を待ちます。音声認識に成功すると認識した音声が文字となって payload に代入され次へ処理が移ります。
 
-  タイムアウトやキャンセルメッセージを受信するとpayloadに以下の文字が代入され指定したラベルへジャンプします。
+  タイムアウトやキャンセルメッセージを受信すると payload に以下の文字が代入され指定したラベルへジャンプします。
 
-    - timeout
-    - canceled
-    - button
+  - timeout
+  - canceled
+  - button
 
 - translate
 
       /translate/ja/en
 
-  翻訳します。payloadに入っている文字を翻訳し、結果をpayloadに代入します。上記例では日本語を英語に翻訳します。英語から日本語に翻訳したい場合は以下のようにします。
+  翻訳します。payload に入っている文字を翻訳し、結果を payload に代入します。上記例では日本語を英語に翻訳します。英語から日本語に翻訳したい場合は以下のようにします。
 
       /translate/en/ja
 
@@ -358,32 +356,28 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /wait-event
 
-  タイムアウトやキャンセルメッセージを受信するとpayloadに以下の文字が代入され次へ処理が移ります。
+  タイムアウトやキャンセルメッセージを受信すると payload に以下の文字が代入され次へ処理が移ります。
 
-    - canceled
-    - button
+  - canceled
+  - button
 
-- chat
+- dora-chat
 
-      /chat/こんにちは
+      /dora-chat
 
-  雑談対話APIにdoraEngine経由で問い合わせます。payloadに対話文字列が返ってきます。
-
-      /chat
-
-  パラメータを省略するとmsg.payloadの文字列がAPIに渡されます。
+  Gemini API に doraEngine 経由で問い合わせます。msg.playload の文字列が API に渡され、payload に対話文字列が返ってきます。
 
 - switch
 
       /switch/こんにちは/:あいさつ
 
-  payloadが指定した文字と一致した場合に指定したラベルへ制御を移します。
+  payload が指定した文字と一致した場合に指定したラベルへ制御を移します。
 
 - payload
 
       /payload/こんにちは
 
-  メッセージのpayloadに値を代入します。
+  メッセージの payload に値を代入します。
 
 - call
 
@@ -401,25 +395,25 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
       /eval/msg.payload="こんにちは"
 
-  Javascriptを実行します。このコマンドは機能しません。
+  Javascript を実行します。このコマンドは機能しません。
 
 - select
 
       /select/晩御飯のおかずに最適なものはどれ？
 
-  クイズの設問を追加します。quiz.initコマンドと共に使用します。
+  クイズの設問を追加します。quiz.init コマンドと共に使用します。
 
 - ok
 
       /ok/ポテトサラダ
 
-  クイズの正解となる選択肢です。quiz.initコマンドと共に使用します。
+  クイズの正解となる選択肢です。quiz.init コマンドと共に使用します。
 
 - ng
 
       /ng/スパゲッティ
 
-  クイズの不正解となる選択肢です。quiz.initコマンドと共に使用します。
+  クイズの不正解となる選択肢です。quiz.init コマンドと共に使用します。
 
 - now
 
@@ -431,16 +425,16 @@ msgオブジェクトに値を代入するには、コマンド行に続いて�
 
 ## HTTP Module
 
-HTTPモジュールはNode-REDとの連携を想定しています。テキストまたはJSONを送信し、テキストまたはJSONを受診します。
+HTTP モジュールは Node-RED との連携を想定しています。テキストまたは JSON を送信し、テキストまたは JSON を受診します。
 
 - http.post
 
       /.payload/2018:05:01
       /http.post/http://localhost:1880/weather
 
-  POSTリクエストします。レスポンスはpayloadに代入されます。
+  POST リクエストします。レスポンスは payload に代入されます。
 
-  タイムアウトはフォルトで3秒です。下記のようにするとタイムアウトを10秒に変更できます。
+  タイムアウトはフォルトで 3 秒です。下記のようにするとタイムアウトを 10 秒に変更できます。
 
       /.httpTimeout/10000
       /.payload/2018:05:01
@@ -450,7 +444,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /http.get/http://localhost:1880/weather
 
-   GETリクエストします。レスポンスはpayloadに代入されます。
+  GET リクエストします。レスポンスは payload に代入されます。
 
 - http.error
 
@@ -463,7 +457,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       HTTPエラーです
       /end
 
-   HTTPリクエストでエラーが発生したら、指定したラベルへ遷移します。
+  HTTP リクエストでエラーが発生したら、指定したラベルへ遷移します。
 
 ## Quiz Module
 
@@ -473,7 +467,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.greeting
 
-  午前11時以降であれば、msg.quiz.greetingに「こんにちは」が代入されます。11時前なら「おはようございます」が代入されます。
+  午前 11 時以降であれば、msg.quiz.greeting に「こんにちは」が代入されます。11 時前なら「おはようございます」が代入されます。
 
 - quiz.entry
 
@@ -488,21 +482,21 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.title/夕焼けの話
 
-  クイズのタイトルをmsg.quiz.titleに代入します。
+  クイズのタイトルを msg.quiz.title に代入します。
 
 - quiz.slideURL
 
       /quiz.slideURL/http://slideurl....
 
-  クイズのスライドのURLをmsg.quiz.slideURLに代入します。
+  クイズのスライドの URL を msg.quiz.slideURL に代入します。
 
 - quiz.slide
 
       /quiz.slide/images/sunset/001.jpeg
 
   クイズのスライド画像を画面に表示します。
-  imagesから始まった画像はPicturesフォルダに入っているファイルを表示します。
-  httpから始まった画像はそのURLの画像を表示します。
+  images から始まった画像は Pictures フォルダに入っているファイルを表示します。
+  http から始まった画像はその URL の画像を表示します。
 
       /quiz.slide/https://upload.wikimedia.org/wikipedia/commons/d/df/Televox_and_R._J._Wensley_1928.jpg
 
@@ -511,29 +505,29 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /quiz.preload/images/sunset/001.jpeg
 
   クイズのスライド画像を読み込みます。画面には表示しません。
-  imagesから始まった画像はPicturesフォルダに入っているファイルを読み込みます。
-  httpから始まった画像はそのURLの画像を読み込みます。
+  images から始まった画像は Pictures フォルダに入っているファイルを読み込みます。
+  http から始まった画像はその URL の画像を読み込みます。
 
 - quiz.startScreen
 
       /quiz.startScreen/images/sunset/001.jpeg
       /wait-event
 
-  スタートボタンのついたクイズのスライド画像を画面に表示します。画像はPicturesフォルダに入っているファイルを表示します。
+  スタートボタンのついたクイズのスライド画像を画面に表示します。画像は Pictures フォルダに入っているファイルを表示します。
 
-  スタートボタンをクリックすると、canceledイベントを発行します。
+  スタートボタンをクリックすると、canceled イベントを発行します。
 
 - quiz.init
 
       /quiz.init/夕焼けの話
 
-  クイズの初期化を行います。/(スラッシュ)以降の文字はクイズIDになります。
+  クイズの初期化を行います。/(スラッシュ)以降の文字はクイズ ID になります。
 
 - quiz.id
 
       /quiz.id/夕焼けの話
 
-  クイズIDをmsg.quiz.quizIdに代入します。
+  クイズ ID を msg.quiz.quizId に代入します。
 
 - quiz.shuffle
 
@@ -545,7 +539,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.timeLimit/120
 
-  クイズの回答時間を秒単位で指定します。msg.quiz.timeLimitに代入されます。
+  クイズの回答時間を秒単位で指定します。msg.quiz.timeLimit に代入されます。
 
 - quiz.select
 
@@ -559,7 +553,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.ok/ポテトサラダ
 
-  クイズの正解となる選択肢です。quiz.initコマンドと共に使用します。quiz.は省略できます。
+  クイズの正解となる選択肢です。quiz.init コマンドと共に使用します。quiz.は省略できます。
 
       /ok/ポテトサラダ
 
@@ -567,7 +561,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.ng/スパゲッティ
 
-  クイズの不正解となる選択肢です。quiz.initコマンドと共に使用します。quiz.は省略できます。
+  クイズの不正解となる選択肢です。quiz.init コマンドと共に使用します。quiz.は省略できます。
 
       /ng/スパゲッティ
 
@@ -608,7 +602,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /goto/:カウントダウン
       :タイムオーバー
 
-  1秒待ちます。制限時間に到達すると指定ラベルへジャンプします。制限時間はquiz.timeLimitで指定します。
+  1 秒待ちます。制限時間に到達すると指定ラベルへジャンプします。制限時間は quiz.timeLimit で指定します。
 
 - quiz.timeCheck
 
@@ -691,7 +685,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       :おわり
       /end
 
-  quiz.yesnoの判定を行います。
+  quiz.yesno の判定を行います。
 
 - quiz.message.open
 
@@ -703,25 +697,25 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.message.title/スライドはここからダウンロードできます。
 
-  メッセージのタイトルを設定します。使用前にquiz.message.openで初期化してください。
+  メッセージのタイトルを設定します。使用前に quiz.message.open で初期化してください。
 
 - quiz.message.content
 
       /quiz.message.content/こんにちは
 
-  メッセージ文章を追加します。使用前にquiz.message.openで初期化してください。
+  メッセージ文章を追加します。使用前に quiz.message.open で初期化してください。
 
 - quiz.message.url
 
       /quiz.message.url/{{{quiz.slideURL}}}
 
-  メッセージのリンク先を指定します。使用前にquiz.message.openで初期化してください。
+  メッセージのリンク先を指定します。使用前に quiz.message.open で初期化してください。
 
 - quiz.message.link
 
       /quiz.message.link/{{{quiz.title}}}
 
-  メッセージのリンクの名前を指定します。使用前にquiz.message.openで初期化してください。
+  メッセージのリンクの名前を指定します。使用前に quiz.message.open で初期化してください。
 
 - quiz.message
 
@@ -737,7 +731,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /quiz.movie.play/sample.mp4
 
-  omxplayerを使ってMovieフォルダに入っている動画を再生します。
+  omxplayer を使って Movie フォルダに入っている動画を再生します。
 
 - quiz.movie.check
 
@@ -746,7 +740,7 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /quiz.movie.check/:再生中
       :再生終了
 
-  1秒待って動画が再生中か動画を調べます。再生が終了したら処理を抜けます。
+  1 秒待って動画が再生中か動画を調べます。再生が終了したら処理を抜けます。
 
 - quiz.movie.cancel
 
@@ -760,25 +754,25 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
 
       /led.auto
 
-  LEDボタンを点灯を自動モードにします。自動モードでは、音声認識中にLEDボタンは点灯します。通常は自動モードです。
+  LED ボタンを点灯を自動モードにします。自動モードでは、音声認識中に LED ボタンは点灯します。通常は自動モードです。
 
 - led.on
 
       /led.on
 
-  LEDボタンを点灯させます。
+  LED ボタンを点灯させます。
 
 - led.off
 
       /led.off
 
-  LEDボタンを消灯させます。
+  LED ボタンを消灯させます。
 
 - led.blink
 
       /led.blink
 
-  LEDボタンを点滅させます。
+  LED ボタンを点滅させます。
 
 ## Operation Module
 
@@ -787,37 +781,37 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /.payload/10
       /op.add/100
 
-    payloadに指定した値を加算します。
+  payload に指定した値を加算します。
 
 - op.sub
 
       /.payload/10
       /op.sub/5
 
-    payloadから指定した値を減算します。
+  payload から指定した値を減算します。
 
 - op.mul
 
       /.payload/10
       /op.mul/2
 
-    payloadに指定した値を乗算します。
+  payload に指定した値を乗算します。
 
 - op.div
 
       /.payload/15
       /op.div/3
 
-    payloadに指定した値を除算します。
+  payload に指定した値を除算します。
 
 - op.and
 
       /.payload/0103
       /op.and/FFF0
 
-    payloadを16進数としてAND演算します。計算結果はpayloadに代入されます。
+  payload を 16 進数として AND 演算します。計算結果は payload に代入されます。
 
-    AND演算すると1のビットがあるpayloadの部分だけが残ります。
+  AND 演算すると 1 のビットがある payload の部分だけが残ります。
 
       /.payload/1234
       /op.and/0FF0   ->  payload=0230
@@ -827,9 +821,9 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /.payload/1234
       /op.or/0FF0
 
-    payloadを16進数としてOR演算します。計算結果はpayloadに代入されます。
+  payload を 16 進数として OR 演算します。計算結果は payload に代入されます。
 
-    OR演算すると1のビットがあるpayloadの部分が1で塗りつぶされます。
+  OR 演算すると 1 のビットがある payload の部分が 1 で塗りつぶされます。
 
       /.payload/1234
       /op.or/0FF0   ->  payload=1FF4
@@ -839,9 +833,9 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /.payload/1234
       /op.xor/0FF0
 
-    payloadを16進数としてXOR演算します。計算結果はpayloadに代入されます。
+  payload を 16 進数として XOR 演算します。計算結果は payload に代入されます。
 
-    XOR演算を２回繰り返すと、payloadは元の値に戻ります。
+  XOR 演算を２回繰り返すと、payload は元の値に戻ります。
 
       /.payload/1234
       /op.xor/0FF0   ->  payload=1DC4
@@ -852,14 +846,14 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /.payload/0101
       /op.not
 
-    payloadを16進数としてNOT演算します。payloadのビットが反転します。
+  payload を 16 進数として NOT 演算します。payload のビットが反転します。
 
 - op.inc
 
       /.payload/10
       /op.inc
 
-    payloadに1加算します。
+  payload に 1 加算します。
 
 - op.dec
 
@@ -873,47 +867,47 @@ HTTPモジュールはNode-REDとの連携を想定しています。テキス�
       /.payload/10
       /op.toInt
 
-    payloadの値を整数にします。
+  payload の値を整数にします。
 
 - op.toFloat
 
       /.payload/10.123
       /op.toFloat
 
-    payloadの値を浮動小数にします。
+  payload の値を浮動小数にします。
 
 - op.==
 
       /op.==/100/:ラベル
 
-    payloadの値が指定した値ならラベルへ遷移します。
+  payload の値が指定した値ならラベルへ遷移します。
 
 - op.!=
 
       /op.!=/100/:ラベル
 
-    payloadの値が指定した値でなければラベルへ遷移します。
+  payload の値が指定した値でなければラベルへ遷移します。
 
 - op.>=
 
       /op.>=/100/:ラベル
 
-    payloadの値が指定した値以上ならラベルへ遷移します。
+  payload の値が指定した値以上ならラベルへ遷移します。
 
 - op.<=
 
       /op.<=/100/:ラベル
 
-    payloadの値が指定した値以下ならラベルへ遷移します。
+  payload の値が指定した値以下ならラベルへ遷移します。
 
 - op.>
 
       /op.>/100/:ラベル
 
-    payloadの値が指定した値より大きいならラベルへ遷移します。
+  payload の値が指定した値より大きいならラベルへ遷移します。
 
 - op.<
 
       /op.</100/:ラベル
 
-    payloadの値が指定した値より小さいならラベルへ遷移します。
+  payload の値が指定した値より小さいならラベルへ遷移します。

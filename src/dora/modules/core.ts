@@ -2,6 +2,7 @@ import { Node } from ".."
 import { Log } from "~/logger"
 const utils = require("../libs/utils")
 import { QuizOK, QuizOKImage, QuizNG, QuizNGImage, QuizCategory, QuizSlide } from "./quiz"
+import { generateContent } from "../../dora-chat-gemini"
 
 function Add(node, msg, options, isTemplated, sign) {
   let message = options
@@ -818,6 +819,33 @@ export const Core = function (DORA, config = {}) {
   DORA.registerType("change", CoreChange)
 
   /*
+   * 生成AIにメッセージを投げ、返答を得る
+   * /dora-chat
+   */
+  function DoraChat(node, options) {
+    Log.info(`dora-chat node:${node}, options:${options}`)
+    node.on("input", async function (msg) {
+      const params: {
+        systemInstruction?: string[]
+      } = {}
+      if (typeof msg.gemini !== "undefined" && typeof msg.gemini.systemInstruction !== "undefined") {
+        params.systemInstruction = [msg.gemini.systemInstruction]
+      }
+      generateContent(msg.payload, params.systemInstruction)
+        .then(res => {
+          Log.info(res)
+          msg.payload = res
+          node.send(msg)
+        })
+        .catch(err => {
+          msg.payload = "Geminiのエラーです"
+          node.send(msg)
+        });
+    })
+  }
+  DORA.registerType("dora-chat", DoraChat)
+
+  /*
    *
    *
    */
@@ -960,7 +988,7 @@ export const Core = function (DORA, config = {}) {
               msg.topicPriority = 0
               node.next(msg)
             } else if (typeof res === "object") {
-              ;(msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
+              ; (msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
               msg.payload = res.transcript
               msg.speechText = msg.payload
               msg.topicPriority = 0
@@ -1101,7 +1129,7 @@ export const Core = function (DORA, config = {}) {
               msg.topicPriority = 0
               node.next(msg)
             } else if (typeof res === "object") {
-              ;(msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
+              ; (msg.languageCode = res.languageCode), (msg.confidence = res.confidence)
               msg.payload = res.transcript
               msg.speechText = msg.payload
               msg.topicPriority = 0
@@ -1289,7 +1317,7 @@ export const Core = function (DORA, config = {}) {
   function CoreCall(node, options) {
     node.options = options
     node.on("input", async function (msg) {
-      const opt: { range? } = {}
+      const opt: { range?} = {}
       Object.keys(node.flow.options).forEach((key) => {
         opt[key] = node.flow.options[key]
       })

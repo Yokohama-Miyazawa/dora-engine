@@ -20,6 +20,6 @@ cd `dirname $0`
 #export ROBOT_ALLOW_LOCALHOST_ACCESS=false
 #export ROBOT_DEFAULT_VOICE=open-jTalk
 export LOG_LEVEL=info
-export SPEECH=browser
+#export SPEECH=browser
 export ROBOT_BASE_DIR=`pwd`
 node build/src/robot-server.js | tee -a robot-server.log
