@@ -367,6 +367,14 @@ msg オブジェクトに値を代入するには、コマンド行に続いて�
 
   Gemini API に doraEngine 経由で問い合わせます。msg.playload の文字列が API に渡され、payload に対話文字列が返ってきます。
 
+  - Gemini 向けパラメータ
+
+    - .gemini.systemInstruction
+
+          /.gemini.systemInstruction/あなたは京都府亀岡市出身で、現在は京都市在住の女性です。休日は関西の様々な所に出かけています。相手のこと(二人称)は「あなた」と呼びます。
+
+      雑談のキャラクターを設定します。
+
 - switch
 
       /switch/こんにちは/:あいさつ
